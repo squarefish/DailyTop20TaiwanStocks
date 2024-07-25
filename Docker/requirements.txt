@@ -1,0 +1,6 @@
+google-cloud-bigquery
+google-cloud-logging
+pytz
+pandas
+pyarrow
+Flask

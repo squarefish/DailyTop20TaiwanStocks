@@ -2,6 +2,8 @@
 
 <ins>說明</ins>: 每天下午兩點從台灣證券交易所(TWSE)下載當日前二十名交易量最大股票，寫入BigQuery。
 
+遇到週末或假日，不寫入資料。
+
 <ins>流程</ins>: Cloud Scheduler(下午兩點定時啟動) -> 執行Cloud Run -> 下載股票資料 -> 匯入BigQuery
 
 <ins>使用到的雲端資源</ins>： 
@@ -20,12 +22,19 @@
 
    名稱： `daily_top20_stocks`
 
-   schema設定： `bq_table_schema.txt`
+   schema設定： 參考`bq_table_schema.txt`
 
    分區欄位： `InDate`
 
- **(2)** 到Artifact Registry建立repository，名稱為`stock-data-repo`，Format選Docker，地區選asia-east1，`Immutable image tags
- `設定為Enabled
+ **(2)** 到Artifact Registry建立repository
+
+   名稱： `stock-data-repo`
+
+   Format： 選Docker
+
+   地區： asia-east1
+
+   Immutable image tags： 設定為Enabled
 
  **(3)** 把這個專案複製到Cloud Shell環境，在`Docker`資料夾下建構image：
 
@@ -39,7 +48,7 @@
  docker tag access_top20_stocks_to_bq_img:1.0.0 asia-east1-docker.pkg.dev/[PROJECT_NAME]/stock-data-repo/access_top20_stocks_to_bq_img:1.0.0
  ```
 
- **(5)** 將image推送到Artifact Registry
+ **(5)** 把tagged image推送到Artifact Registry
 
  ```
  docker push asia-east1-docker.pkg.dev/[PROJECT_NAME]/stock-data-repo/access_top20_stocks_to_bq_img:1.0.0

@@ -1,10 +1,10 @@
 ## 取得每日前二十名交易量最大股票資訊存入BigQuery  ##
 
-- <ins>說明</ins>: 每天下午兩點從台灣證券交易所(TWSE)下載當日前二十名交易量最大股票，寫入BigQuery。
+<ins>說明</ins>: 每天下午兩點從台灣證券交易所(TWSE)下載當日前二十名交易量最大股票，寫入BigQuery。
 
-- <ins>流程</ins>: Cloud Scheduler(下午兩點定時啟動) -> 執行Cloud Run -> 下載股票資料 -> 匯入BigQuery
+<ins>流程</ins>: Cloud Scheduler(下午兩點定時啟動) -> 執行Cloud Run -> 下載股票資料 -> 匯入BigQuery
 
-- <ins>使用到的雲端資源</ins>： 
+<ins>使用到的雲端資源</ins>： 
  
  - Cloud Shell：建構Docker images並存放到Artifact Registry，佈署Cloud Run服務
 
@@ -14,9 +14,15 @@
 
  - Cloud Run：以Artifact Registry來源的Docker image佈署並執行任務
 
-- <ins>步驟</ins>: 
+<ins>步驟</ins>: 
 
- **(1)** 在BigQuery建立空白表單，名稱為`daily_top20_stocks`，schema設定：`bq_table_schema.txt`，使用`InDate`作為分區欄位
+ **(1)** 在BigQuery建立空白表單
+
+   名稱： `daily_top20_stocks`
+
+   schema設定： `bq_table_schema.txt`
+
+   分區欄位： `InDate`
 
  **(2)** 到Artifact Registry建立repository，名稱為`stock-data-repo`，Format選Docker，地區選asia-east1，`Immutable image tags
  `設定為Enabled

@@ -62,7 +62,7 @@ def get_top20_stock_data():
                 stock_data = pd.DataFrame(stock_raw_data['data'])
                 indate = datetime.strptime(stock_raw_data['date'], '%Y%m%d').date()
                 stock_data.columns = cols
-                stock_data['UpsOrDowns'] = [s.strip("</span>").split(">")[1] if s != '' else None for s in stock_data['UpsOrDowns']]
+                stock_data['UpsOrDowns'] = [s.strip("</span>").split(">")[1] if s not in ['', 'X'] else s for s in stock_data['UpsOrDowns']]
                 stock_data['InDate'] = indate
 
                 # not all the columns listed here are strings, remove comma only from valid data types 

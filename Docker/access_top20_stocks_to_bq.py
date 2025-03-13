@@ -21,8 +21,8 @@ logger = logging_client.logger(log_name)
 
 def get_top20_stock_data():
     # daily data should be refreshed after 2:00 pm
-    url = 'https://www.twse.com.tw/pcversion/zh/exchangeReport/MI_INDEX20'
-    
+    url = 'https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX20?response=json'
+
     cols = ['Ranking', 
             'StockID', 
             'StockName',
